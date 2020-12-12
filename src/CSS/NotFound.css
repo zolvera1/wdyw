@@ -1,0 +1,27 @@
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+}
+#not-img {
+    width:100%;
+    height:auto;
+    padding-bottom: 20vw;
+}
+.info {
+    color: #fbf9fb;
+    font-size: large;
+    font-weight: 500;
+}
+.found-err{
+    color: red;
+    font-size: 15vh;
+}
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .info{
+        color: #fbf9fb;
+        font-size: xx-large;
+    }
+  }
