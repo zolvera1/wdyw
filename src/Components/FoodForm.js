@@ -6,16 +6,16 @@ import axios from "axios";
 const FoodForm = (props) => {
  
   return (
-    <Form>
-      <Form.Group controlId="formBasicEmail">
+    <Form onSubmit={props.handleSubmit}>
+      <Form.Group controlId="address">
         <Form.Label>Address</Form.Label>
-        <Form.Control placeholder="Address" />
+        <Form.Control onChange={props.handleAddressChange} placeholder="Address" />
         <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
+          Don't worry, we won't send you random pizzas.
         </Form.Text>
       </Form.Group>
       <Form.Group controlId="exampleForm.ControlSelect1">
-        <Form.Label>Example select</Form.Label>
+        <Form.Label>State</Form.Label>
         <Form.Control
           onChange={(e) => props.handleStateChange(e)}
           value={props.formData.state}
@@ -74,10 +74,25 @@ const FoodForm = (props) => {
           <option value="WY">WY</option>
         </Form.Control>
       </Form.Group>
-    
+      <Form.Group controlId="exampleForm.ControlSelect1">
+        <Form.Label>Radius (Miles) </Form.Label>
+        <Form.Control
+          onChange={(e) => props.handleRadiusChange(e)}
+          value={props.formData.radius}
+          as="select"
+        >
+          <option value={1}> 1 </option>
+          <option value={5}> 5 </option>
+          <option value={10}> 10 </option>
+          <option value={15}> 15 </option>
+          <option value={20}> 20 </option>
+          <option value={25}> 25 </option>
+        </Form.Control>
+      </Form.Group>
       {["checkbox"].map((type) => (
         <div key={`inline-${type}`} className="mb-3">
           <Form.Check
+          
             name="1"
             onChange={(e) => props.handlePriceChange(e)}
             inline
@@ -112,10 +127,6 @@ const FoodForm = (props) => {
           />
         </div>
       ))}
-
-      <Form.Group controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
       <Button id="btn-submit" variant="primary" type="submit">
         Submit
       </Button>
