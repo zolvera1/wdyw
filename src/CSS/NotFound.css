@@ -18,6 +18,10 @@
     color: red;
     font-size: 15vh;
 }
+#radio-btns {
+    display: flex;
+    justify-content:space-evenly;
+}
 @media only screen and (min-width: 768px) {
     /* For desktop: */
     .info{

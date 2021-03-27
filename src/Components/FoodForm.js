@@ -1,9 +1,10 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useCallback } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 
 const FoodForm = (props) => {
+ 
   return (
     <Form>
       <Form.Group controlId="formBasicEmail">
@@ -15,7 +16,11 @@ const FoodForm = (props) => {
       </Form.Group>
       <Form.Group controlId="exampleForm.ControlSelect1">
         <Form.Label>Example select</Form.Label>
-        <Form.Control onChange= { e => props.handleStateChange(e)} value={props.formData.state} as="select">
+        <Form.Control
+          onChange={(e) => props.handleStateChange(e)}
+          value={props.formData.state}
+          as="select"
+        >
           <option value="AL">AL</option>
           <option value="AK">AK</option>
           <option value="AZ">AZ</option>
@@ -69,14 +74,45 @@ const FoodForm = (props) => {
           <option value="WY">WY</option>
         </Form.Control>
       </Form.Group>
-      {["radio"].map((type) => (
+    
+      {["checkbox"].map((type) => (
         <div key={`inline-${type}`} className="mb-3">
-          <Form.Check onChange={e => props.handlePriceChange(e)} value={1} inline label="$" type={type} id={`inline-${type}-1`} />
-          <Form.Check onChange={e => props.handlePriceChange(e)} value={2}inline label="$$" type={type} id={`inline-${type}-2`} />
-          <Form.Check onChange={e => props.handlePriceChange(e)} value={3} inline label="$$$" type={type} id={`inline-${type}-3`} />
-          <Form.Check  onChange={e => props.handlePriceChange(e)} value={4} inline label="$$$$" type={type} id={`inline-${type}-4`} />
+          <Form.Check
+            name="1"
+            onChange={(e) => props.handlePriceChange(e)}
+            inline
+            label="$"
+            type={type}
+            
+            id={`inline-${type}-1`}
+          />
+          <Form.Check
+            name="2"
+            onChange={(e) => props.handlePriceChange(e)}
+            inline
+            label="$$"
+            type={type}
+            id={`inline-${type}-2`}
+          />
+          <Form.Check
+            name="3"
+            onChange={(e) => props.handlePriceChange(e,type)}
+            inline
+            label="$$$"
+            type={type}
+            id={`inline-${type}-3`}
+          />
+          <Form.Check
+            name="4"
+            onChange={(e) => props.handlePriceChange(e)}
+            inline
+            label="$$$$"
+            type={type}
+            id={`inline-${type}-4`}
+          />
         </div>
       ))}
+
       <Form.Group controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Check me out" />
       </Form.Group>
