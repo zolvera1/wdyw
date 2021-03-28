@@ -2,19 +2,37 @@ import React, { Component, useState, useCallback } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-
+import Col from 'react-bootstrap/Col'
 const FoodForm = (props) => {
- 
+
   return (
     <Form onSubmit={props.handleSubmit}>
       <Form.Group controlId="address">
         <Form.Label>Address</Form.Label>
-        <Form.Control onChange={props.handleAddressChange} placeholder="Address" />
+        <Form.Control
+          onChange={props.handleAddressChange}
+          placeholder="1234 Main St"
+        />
         <Form.Text className="text-muted">
           Don't worry, we won't send you random pizzas.
         </Form.Text>
       </Form.Group>
-      <Form.Group controlId="exampleForm.ControlSelect1">
+      <Form.Group controlId="address2">
+        <Form.Label>Address 2</Form.Label>
+        <Form.Control
+          onChange={e=> props.handleAddressTwoChange(e)}
+          placeholder="Apt, Suite..."
+        />
+        <Form.Text className="text-muted">
+          Don't worry, we won't send you random pizzas.
+        </Form.Text>
+      </Form.Group>
+      <Form.Row>
+      <Form.Group as={Col} controlId="formCity">
+        <Form.Label>City</Form.Label>
+        <Form.Control onChange={e=> props.handleCityChange(e)} value={props.formData.city}></Form.Control>
+      </Form.Group>
+      <Form.Group as={Col} controlId="exampleForm.ControlSelect1">
         <Form.Label>State</Form.Label>
         <Form.Control
           onChange={(e) => props.handleStateChange(e)}
@@ -74,6 +92,11 @@ const FoodForm = (props) => {
           <option value="WY">WY</option>
         </Form.Control>
       </Form.Group>
+      <Form.Group as={Col} controlId="formZip">
+        <Form.Label>Zip Code</Form.Label>
+        <Form.Control onChange={e=> props.handleZipChange(e)} value={props.formData.zip}></Form.Control>
+      </Form.Group>
+      </Form.Row>
       <Form.Group controlId="exampleForm.ControlSelect1">
         <Form.Label>Radius (Miles) </Form.Label>
         <Form.Control
@@ -89,16 +112,15 @@ const FoodForm = (props) => {
           <option value={25}> 25 </option>
         </Form.Control>
       </Form.Group>
+      
       {["checkbox"].map((type) => (
         <div key={`inline-${type}`} className="mb-3">
           <Form.Check
-          
             name="1"
             onChange={(e) => props.handlePriceChange(e)}
             inline
             label="$"
             type={type}
-            
             id={`inline-${type}-1`}
           />
           <Form.Check
@@ -111,7 +133,7 @@ const FoodForm = (props) => {
           />
           <Form.Check
             name="3"
-            onChange={(e) => props.handlePriceChange(e,type)}
+            onChange={(e) => props.handlePriceChange(e, type)}
             inline
             label="$$$"
             type={type}
