@@ -3,50 +3,51 @@ import Heading from "./Heading";
 import FoodForm from "./FoodForm";
 import axios from "axios";
 import { useState, useCallback } from "react";
-import Display from './Display'
+import Display from "./Display";
 
 export const Mainpage = () => {
-
   const [formData, setFormData] = useState({
-    price: "",
+    price:[],
     city: "",
-    zip:1,
+    zip: '',
     state: "",
     address: "",
-    addresstwo:'',
-    radius: 1,
+    addresstwo: "",
+    radius: 5,
   });
   const [rest, setRest] = useState({});
   const [isSubmitted, setisSubmitted] = useState(false);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios
-      .post("/search", {
-        data: formData,
-      })
-      .then((res) => {
-        console.log(res);
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try{
+    
+    const res = await axios.post("/search", {
+        data: formData})
+        
+        
         setRest(res.data)
-      })
-      .catch(e => {
-        console.log("bello")
-      }
-      );
-      setisSubmitted(true)
+
+        setisSubmitted(true)
+        
+    }
+    catch(e){
+        console.log(e)
+    }
+   
   };
   const handleAddressChange = (e) => {
     setFormData({ ...formData, address: e.target.value });
   };
 
- const handleAddressTwoChange = e => {
-  setFormData({ ...formData, addresstwo: e.target.value });
- }
- const handleZipChange = e => {
-  setFormData({ ...formData, zip: e.target.value });
- }
-const handleCityChange = e => {
-  setFormData({ ...formData, city: e.target.value });
-}
+  const handleAddressTwoChange = (e) => {
+    setFormData({ ...formData, addresstwo: e.target.value });
+  };
+  const handleZipChange = (e) => {
+    setFormData({ ...formData, zip: e.target.value });
+  };
+  const handleCityChange = (e) => {
+    setFormData({ ...formData, city: e.target.value });
+  };
   const handleStateChange = (e) => {
     setFormData({ ...formData, state: e.target.value });
   };
@@ -59,9 +60,10 @@ const handleCityChange = e => {
     } else {
       arr = price.filter((a) => a !== e.target.name);
     }
-    //yelp doesn't like arrays so...
-    let priceStr  = arr.toString();
-    setFormData({ ...formData, price: priceStr });
+
+    
+    setFormData({ ...formData, price: arr });
+    console.log(arr)
   };
   const handleRadiusChange = (e) => {
     setFormData({ ...formData, radius: e.target.value });
@@ -69,6 +71,7 @@ const handleCityChange = e => {
   return (
     <div className="main">
       <Heading></Heading>
+      
       {/* <button onClick={(e) => handleClick(e)}>HELLO </button> */}
       <FoodForm
         handleStateChange={handleStateChange}
@@ -81,8 +84,8 @@ const handleCityChange = e => {
         handleSubmit={handleSubmit}
         formData={formData}
       ></FoodForm>
-      {isSubmitted ? <Display restaurant={rest}/> : null}
-      
+
+      {isSubmitted ? <Display zoom={15} restaurant={rest} /> : null}
     </div>
   );
 };
